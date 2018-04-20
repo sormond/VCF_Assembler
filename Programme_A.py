@@ -1,39 +1,59 @@
+wkdirectory = "/Users/sormond/Desktop"
+reference_file = "reference.fna"
+fastq_file = "test.fq"
+fasta_file = "test.fa"
+vcf_file = "name of output vcf file"
+
 import os
-os.chdir('C:/Users/Shannon/Desktop/')
-with open('Programming_Assignment_A/TestFiles1/reference.fna', 'r') as r:
+os.chdir(wkdirectory)
+with open(reference_file, 'r') as r:
     r = r.readlines()
     ref = r[1]
 
-with open('Programming_Assignment_A/TestFiles1/input.fq', 'r') as f:
+with open(fastq_file, 'r') as f:
     fastq_list = f.readlines()
 
+# function which breaks list elements into chunks (list of lists) of a chosen size
 def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
+    """Yield successive n-sized chunks from l"""
     newlist = []
-    for i in range(0, len(l), n):
+    for i in range(0, len(l), n) :
         newlist.append(l[i:i + n])
     return newlist
 
-
 """ Convert Fastq to Fasta file """
-fqn = chunks(fastq_list, 2)  # perform above function 'chunks' on 'fastq_list', which will
 
+# perform 'chunks' on 'fastq_list' to break the fastq file into chunks of 2 lines, and output to a list 'fqn'
+fqn = chunks(fastq_list, 2)  
+
+# delete every second chunk of two in fastq_list to remove read quality info
 c = 0
-for i in range(1, len(fqn), 2):
-    del (fqn[i - c])
+for i in range(1, len(fqn), 2) :
+    # for each 'chunk' in 'fqn', delete 
+    del (fqn[i - c]) # 'c' variable adjusts for list index changes that occur every loop
     c = c + 1
 
-print(len(fqn))  # check
+print(len(fqn))  # check, len should = 10
 
-fastafile = open('fasta.fa', 'w')
-fastafile.write(str(fqn))
+fqn2 = []
+for i in range(0, len(fqn)) :
+    fqn2.append(fqn[i][0])
+    fqn2.append(fqn[i][1])
+
+print(fqn2)
+print(len(fqn2))
+
+fastafile = open(fasta_file, 'w')
+# fastafile.write(str(fqn))
+for item in fqn2:
+  fastafile.write(item)
 fastafile.close()
 # must close connection to file:    outfile.close()
 
-
 """ VCF file compiler """
 
-new = chunks(fastq_list, 4)  # perform above function 'chunks' on 'fastq_list', which will
+# perform 'chunks' on 'fastq_list' to break the fastq file into chunks of 4 lines
+new = chunks(fastq_list, 4)
 
 # add code for headers for outfile here
 
@@ -46,7 +66,6 @@ for i in range(0, 1) :
         else :
             print("false" + a[j] + ref[j])
             # outfile.write(
-
 
 ## \t = tab (use for making vcf file)
 ## writing things to file : outfile = open('filename, 'w')
