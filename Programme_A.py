@@ -1,15 +1,18 @@
-wkdirectory = "C:/Users\Shannon\Desktop\Programming_Assignment_A\TestFiles1"
-reference_file = "reference.fna"
-fastq_file = "input.fq"
-fasta_file = "output.fa"
-vcf_file = "outputvcf.vcf"
+wkdirectory = "C:/Users\Shannon\Desktop\Programming_Assignment_A\TestFiles1" # add working directory here
+reference_file = "reference.fna" # add reference sequence here
+fastq_file = "input.fq"  # add fastq file here
+fasta_file = "output.fa" # specify output fasta file name here
+vcf_file = "outputvcf.vcf" # specify output VCF file name here
 
 import os
 os.chdir(wkdirectory)
+
+# opens reference file and extracts line containing sequence and inserts it into a list, 'ref'
 with open(reference_file, 'r') as r:
     r = r.readlines()
     ref = r[1]
 
+# opens fastq file
 with open(fastq_file, 'r') as f:
     fastq_list = f.readlines()
 
