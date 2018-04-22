@@ -1,4 +1,4 @@
-wkdirectory = "/Users/sormond/Desktop"
+wkdirectory = "C:/Users\Shannon\Desktop\Programming_Assignment_A\TestFiles1"
 reference_file = "reference.fna"
 fastq_file = "input.fq"
 fasta_file = "output.fa"
@@ -33,16 +33,11 @@ for i in range(1, len(fqn), 2) :
     del (fqn[i - c]) # 'c' variable adjusts for list index changes that occur every loop
     c = c + 1
 
-print(len(fqn))  # check, len should = 10
-
 # extract all items from lists wthin lists of 'fqn' and create list, 'fqn2'
 fqn2 = []
 for i in range(0, len(fqn)) :
     fqn2.append(fqn[i][0])
     fqn2.append(fqn[i][1])
-
-print(fqn2) # just a check
-print(len(fqn2)) # just a check
 
 # write new fasta file
 fastafile = open(fasta_file, 'w')
@@ -63,27 +58,31 @@ vcffile = open(vcf_file, 'w')
 for item in headers:
     vcffile.write(item)
 
-# with open("filename.txt", "w") as outfile:
-for i in range(0, len(new)) :
+# with open("filename.txt", "wb") as outfile:
+uniqueList = []
+for i in range(0, len(new)):
     a = new[i][1]
-    for j in range(0, len(a)) :
-        if a[j] == ref[j] :
+    for j in range(0, len(a)):
+        uniqueStr = "%s,%s" % (str(j), str(a[j]))
+        if a[j] == ref[j]:
             pass
             # print("true" + (a[j]) + ref[j])
-        else :
+        elif uniqueStr not in uniqueList:
             POS = str(j)
             ID = str(new[i][0])
             ID = ID.rstrip()  # removes '/n' from ID string
             REF = a[j]
             ALT = ref[j]
-            vcffile.write("\n")
-            vcffile.write("1\t")
-            vcffile.write("%s\t" % POS)
-            vcffile.write("%s\t" % ID)
-            vcffile.write("%s\t" % REF)
-            vcffile.write("%s\t" % ALT)
+            vcffile.write("\n1\t%s\t%s\t%s\t%s\t" % (POS, ID, REF, ALT))
+            uniqueList.append(uniqueStr)
+           # vcffile.write("1\t")
+            #vcffile.write("%s\t" % POS)
+            #vcffile.write("%s\t" % ID)
+            #vcffile.write("%s\t" % REF)
+            #vcffile.write("%s\t" % ALT)
             # print("false" + a[j] + ref[j])
 vcffile.close()
+print(uniqueList)
 
 # need to stop variants being added to vcf file if they already exist in vcf file
 
