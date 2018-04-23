@@ -7,10 +7,10 @@ parser.add_argument('-V', '--VCF', help = "If reference.fasta passed, creates a 
 
 args = parser.parse_args()
 reference_file = "" # defines reference_file
-if args.VCF : # if a VCF file given, loads file into 'reference_file
+if args.VCF : # if a VCF file given, loads file into 'reference_file'
     reference_file = args.VCF
 
-fastq_file = args.fastq  # add fastq file here
+fastq_file = args.fastq
 fasta_file = "output.fa"
 vcf_file = "outputvcf.vcf"
 
@@ -28,6 +28,7 @@ def chunks(l, n):
 
 
     """ VCF file compiler """
+    # this script will run if the -V flag is given in the command line, in addition to an input fastq and a reference.fasta file
 
 if args.VCF :
     #  extracts line containing sequence from 'reference_file' and inserts it into a list, 'ref'
@@ -53,7 +54,7 @@ if args.VCF :
             if a[j] == ref[j]: # pass if sequence at position 'j' is identical
                 pass
             elif uniqueStr not in uniqueList: # if sequence at position 'j' is non-identical, and if 'uniqueStr' does not exist in 'uniqueList', add a new line to the VCF file
-                POS = str(j+1)
+                POS = str(j+1) # +1 to position number due to python 0-based indexing
                 REF = a[j]
                 ALT = ref[j]
                 vcffile.write("\n1\t%s\t.\t%s\t%s\t.\t.\t.\t" % (POS, REF, ALT))
@@ -61,7 +62,9 @@ if args.VCF :
     vcffile.close()
 
     
-    """ Convert Fastq to Fasta file """ # comment about fact that this code already exists on biopython
+    """ Convert Fastq to Fasta file """
+    # note: script that can carry out this same conversion exists elsewhere, such as on Biopython
+    # This script will be carried out if the -V flag is not used in command line
 
 else :
     # perform 'chunks' on 'fastq_list' to break the fastq file into chunks of 2 lines, and output to a list 'fqn'
