@@ -2,9 +2,9 @@
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('fastq', help = "fastq file to be processed")
-parser.add_argument('-o', '--outstem', help = "stem name for output file")
-parser.add_argument('-r', '--ref', help = "Reference file. If generatting VCF file, this should be the fasta reference file")
+parser.add_argument('fastq', help = "fastq file to be processed. Must be specified.")
+parser.add_argument('-o', '--outstem', help = "Stem name for output file. Must be specified")
+parser.add_argument('-r', '--ref', help = "Reference sequence file. If generating a VCF file, this should be the fasta reference file")
 
 args = parser.parse_args()
 reference_file = "" # defines reference_file
@@ -12,8 +12,6 @@ if args.ref : # if a reference file given, loads file into 'reference_file'
     reference_file = args.ref
 
 fastq_file = args.fastq
-fasta_file = args.fasta
-vcf_file = args.vcf
 
 # opens fastq file
 with open(fastq_file, 'r') as f:
@@ -31,7 +29,7 @@ def chunks(l, n):
     """ VCF file compiler """
     # this script will run if the -V flag is given in the command line, in addition to an input fastq and a reference.fasta file
 
-if args.VCF :
+if args.ref :
     #  extracts line containing sequence from 'reference_file' and inserts it into a list, 'ref'
     with open(reference_file, 'r') as r:
         r = r.readlines()
@@ -42,7 +40,7 @@ if args.VCF :
 
     # creates vcf file with headers
     headers = ["#CHROM\t", "POS\t", "ID\t", "REF\t", "ALT\t", "QUAL\t", "FILTER\t", "INFO\t"]
-    vcffile = open(args.outstem + ".vcf", 'w')
+    vcffile = open(args.outstem + ".vcf", 'w')  # Gives VCF file name specified by 'outstem' argument in command line
     for item in headers:
         vcffile.write(item)
 
@@ -90,7 +88,7 @@ else :
         fqn2[i] = ">" + fqn2[i]
 
     # write new fasta file
-    fastafile = open(args.outstem + ".fasta", 'w')
+    fastafile = open(args.outstem + ".fa", 'w') # Gives fasta file name specified by 'outstem' argument in command line
     for item in fqn2:
         # for each item of fqn2, write new line in fasta file
         fastafile.write(item)
