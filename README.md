@@ -34,16 +34,16 @@ This programme will  be executed if the flag '-V' is used in the command along w
      ./VCF_Assembler.py *input.fq* -V *reference.fasta*
    
 ## Example
-Example test files are avialable in the directory: test.fq and testref.fasta. Outputs using this script, using both programmes, are available as: testvcf.vcf and test.fasta
+Example test files are avialable in the directory: test.fq and testref.fasta. Outputs using this script, using both programmes, are available as: outputvcf.vcf and output.fa
 
 To run a fastq to fasta file conversion (must be in working directory containing VCF_Assembler.py):
 
      ./VCF_Assembler.py test.fq
 
-This adds *test.fa* to the working directory. The read quality information has been removed and the '@' character at the beginning of the read ID string has been replaced with '>'.
+This adds *output.fa* to the working directory. The read quality information has been removed and the '@' character at the beginning of the read ID string has been replaced with '>'.
 
 To create a VCF file using the fastq file and the reference fasta file (must be in working directory containing VCF_Assembler.py):
 
      ./VCF_Assembler.py test.fq -V testref.fasta
      
-This adds *testvcf.vcf* to the working directory, which contains sequence variant information such as position, ref and alt sequence.
+This adds *outputvcf.vcf* to the working directory, which contains sequence variant information such as position, ref and alt sequence.
