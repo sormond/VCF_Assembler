@@ -3,6 +3,8 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('fastq', help = "fastq file to be processed")
+parser.add_argument('fasta', help = "name of output fasta file")
+parser.add_argument('vcf', help = "name of output vcf file")
 parser.add_argument('-V', '--VCF', help = "If reference.fasta passed, creates a VCF file. Otherwise, fasta will be generated from fastq file.")
 
 args = parser.parse_args()
@@ -11,8 +13,8 @@ if args.VCF : # if a VCF file given, loads file into 'reference_file'
     reference_file = args.VCF
 
 fastq_file = args.fastq
-fasta_file = "output.fa"
-vcf_file = "outputvcf.vcf"
+fasta_file = args.fasta
+vcf_file = args.vcf
 
 # opens fastq file
 with open(fastq_file, 'r') as f:
