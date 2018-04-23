@@ -53,7 +53,7 @@ if args.VCF :
             if a[j] == ref[j]: # pass if sequence at position 'j' is identical
                 pass
             elif uniqueStr not in uniqueList: # if sequence at position 'j' is non-identical, and if 'uniqueStr' does not exist in 'uniqueList', add a new line to the VCF file
-                POS = str(j)
+                POS = str(j+1)
                 REF = a[j]
                 ALT = ref[j]
                 vcffile.write("\n1\t%s\t.\t%s\t%s\t.\t.\t.\t" % (POS, REF, ALT))
