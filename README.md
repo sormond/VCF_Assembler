@@ -26,7 +26,7 @@ By default, running the programme with just a single fastq file argument, the '-
    ./VCF_Assembler.py *input.fq* -o *outputFASTAname*
 
 ## VCF file creator
-This programme will  be executed if the flag '-r' is used in the command along with both an input fastq file and a reference fasta file. An example is:
+This programme will  be executed if the flag '-r' is used in the command along with both an input fastq file and a reference fasta file, as well as the '-o' flag and an output file stem name. An example is:
 	
    ./VCF_Assembler.py *input.fq* -r *reference.fasta* -o *outputVCFname*
    
