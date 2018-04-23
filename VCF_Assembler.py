@@ -3,14 +3,13 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('fastq', help = "fastq file to be processed")
-parser.add_argument('fasta', help = "name of output fasta file")
-parser.add_argument('-V', 'vcf', help = "name of output vcf file")
-parser.add_argument('-V', '--VCF', help = "If reference.fasta passed, creates a VCF file. Otherwise, fasta will be generated from fastq file.")
+parser.add_argument('-o', '--outstem', help = "stem name for output file")
+parser.add_argument('-r', '--ref', help = "Reference file. If generatting VCF file, this should be the fasta reference file")
 
 args = parser.parse_args()
 reference_file = "" # defines reference_file
-if args.VCF : # if a reference file given, loads file into 'reference_file'
-    reference_file = args.VCF
+if args.ref : # if a reference file given, loads file into 'reference_file'
+    reference_file = args.ref
 
 fastq_file = args.fastq
 fasta_file = args.fasta
@@ -43,7 +42,7 @@ if args.VCF :
 
     # creates vcf file with headers
     headers = ["#CHROM\t", "POS\t", "ID\t", "REF\t", "ALT\t", "QUAL\t", "FILTER\t", "INFO\t"]
-    vcffile = open(vcf_file, 'w')
+    vcffile = open(args.outstem + ".vcf", 'w')
     for item in headers:
         vcffile.write(item)
 
@@ -91,7 +90,7 @@ else :
         fqn2[i] = ">" + fqn2[i]
 
     # write new fasta file
-    fastafile = open(fasta_file, 'w')
+    fastafile = open(args.outstem + ".fasta", 'w')
     for item in fqn2:
         # for each item of fqn2, write new line in fasta file
         fastafile.write(item)
