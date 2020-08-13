@@ -1,4 +1,5 @@
 # VCF_Assembler
+This programme was created for a post-graduate university course in computational biology.
 A programme to create VCF files and convert FASTQ files to FASTA file format.
 
 
